@@ -1,31 +1,619 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Yitong Liu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yitong Liu | Personal Homepage</title>
+    <style>
+        /* ============================================================
+           CSS Variables & Reset
+           ============================================================ */
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #3d566e;
+            --accent: #3498db;
+            --accent-light: #5dade2;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5d6d7e;
+            --border: #e0e4e8;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.12);
+            --radius: 10px;
+            --transition: 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC",
+                "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============================================================
+           Header / Hero Section
+           ============================================================ */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a252f 100%);
+            color: #fff;
+            padding: 60px 20px 50px;
+            text-align: center;
+        }
+
+        /*
+         * ─── AVATAR ───────────────────────────────────────────
+         * Replace "images/avatar.jpg" below with the path to your
+         * own photo.  Recommended: a square image, at least 300×300 px.
+         * Accepted formats: .jpg, .png, .webp
+         *
+         * If your image is named differently, change BOTH places:
+         *   1. The  src  attribute in <img> below (line ~95)
+         *   2. The  background-image  in .avatar-fallback (line ~115)
+         *      (the fallback shows while the image is loading)
+         */
+        .avatar-wrapper {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform var(--transition), border-color var(--transition);
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Fallback shown while the image loads (optional) */
+        .avatar-fallback {
+            display: none;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.15rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .hero .location {
+            font-size: 0.95rem;
+            opacity: 0.65;
+            margin-bottom: 16px;
+        }
+
+        .hero .quote {
+            font-style: italic;
+            font-size: 1rem;
+            opacity: 0.7;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* Contact links row */
+        .contact-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .contact-row a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color var(--transition);
+        }
+
+        .contact-row a:hover {
+            color: #fff;
+        }
+
+        .contact-row .icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ============================================================
+           Main Content
+           ============================================================ */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        /* Section card */
+        .section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            transition: box-shadow var(--transition);
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h2 .section-icon {
+            font-size: 1.3rem;
+        }
+
+        .section h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-top: 16px;
+            margin-bottom: 6px;
+        }
+
+        .section p {
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        /* ============================================================
+           Lists
+           ============================================================ */
+        .interest-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .interest-tags li {
+            background: #eaf2f8;
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .interest-tags li:hover {
+            background: #d4e6f1;
+            transform: translateY(-1px);
+        }
+
+        /* ============================================================
+           Timeline / Education
+           ============================================================ */
+        .timeline-item {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 18px;
+            border-left: 2px solid var(--border);
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .timeline-item .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item .timeline-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .timeline-item .timeline-school {
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+
+        .timeline-item .timeline-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+
+        .timeline-item ul {
+            margin-top: 4px;
+            padding-left: 18px;
+            color: var(--text-light);
+        }
+
+        .timeline-item ul li {
+            margin-bottom: 3px;
+            font-size: 0.92rem;
+        }
+
+        /* ============================================================
+           Honors cards
+           ============================================================ */
+        .honor-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .honor-list li {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px 16px;
+            border-left: 3px solid var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .honor-list li .honor-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .honor-list li .honor-event {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .honor-list li .honor-year {
+            color: var(--accent);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* ============================================================
+           Skills
+           ============================================================ */
+        .skill-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-list li {
+            background: #f8f9fa;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: border-color var(--transition);
+        }
+
+        .skill-list li:hover {
+            border-color: var(--accent);
+        }
+
+        /* ============================================================
+           Footer
+           ============================================================ */
+        .footer {
+            text-align: center;
+            padding: 24px 20px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================================
+           Responsive
+           ============================================================ */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 16px 32px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .avatar {
+                width: 110px;
+                height: 110px;
+            }
+            .section {
+                padding: 20px 18px;
+            }
+            .honor-list {
+                grid-template-columns: 1fr;
+            }
+            .timeline-item .timeline-header {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<h1>Yitong Liu</h1>
+    <!-- ============================================================
+         HERO / HEADER
+         ============================================================ -->
+    <header class="hero">
+        <!--
+        ╔══════════════════════════════════════════════════════════╗
+        ║  ★  AVATAR / PROFILE PHOTO  ★                          ║
+        ║                                                          ║
+        ║  Put your photo file in the same folder as this HTML     ║
+        ║  file (or a subfolder), then change the src below.       ║
+        ║                                                          ║
+        ║  Example:                                                ║
+        ║    src="avatar.jpg"          (same folder)               ║
+        ║    src="images/avatar.jpg"   (inside images/ subfolder)  ║
+        ║                                                          ║
+        ║  Recommended size: 300×300 px or larger, square.         ║
+        ╚══════════════════════════════════════════════════════════╝
+        -->
+        <div class="avatar-wrapper">
+            <img
+                class="avatar"
+                src="images/avatar.jpg"
+                alt="Yitong Liu"
+                onerror="this.style.display='none'"
+            >
+        </div>
 
-<h2>About Me</h2>
-<p>
-Undergraduate student interested in AI,
-Machine Learning and Embodied Intelligence.
-</p>
+        <h1>Yitong Liu</h1>
+        <p class="subtitle">Undergraduate Student at Tsinghua University</p>
+        <p class="location">Beijing, China</p>
+        <p class="quote">"Be the change that you want to see in the world."</p>
 
-<h2>Research Interests</h2>
-<ul>
-<li>Machine Learning</li>
-<li>Embodied AI</li>
-<li>Agent Systems</li>
-<li>Metaverse and Virtual Worlds</li>
-</ul>
+        <div class="contact-row">
+            <a href="mailto:liuyitong0905@163.com">
+                <svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                liuyitong0905@163.com
+            </a>
+            <a href="https://github.com/apostle715" target="_blank" rel="noopener">
+                <svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+            </a>
+            <span style="color:rgba(255,255,255,0.7);font-size:0.9rem;">
+                (+86) 13811090181
+            </span>
+        </div>
+    </header>
 
-<h2>Education</h2>
-<p>Tsinghua University</p>
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    <main class="container">
 
-<h2>Projects</h2>
-<p>Kaggle Competitions</p>
+        <!-- About Me -->
+        <section class="section">
+            <h2><span class="section-icon">👋</span> About Me</h2>
+            <p>
+                I'm Liu Yitong, an undergraduate student at Tsinghua University.
+                I graduated from The High School Affiliated to Renmin University of
+                China (RDFZ), and was admitted to the Department of Automation at
+                Tsinghua University in September 2025. In the second semester of my
+                freshman year, I joined the Tsinghua University Tong Class and served
+                as the technical committee member of the class.
+            </p>
+            <p>
+                I have a sincere enthusiasm for acquiring professional knowledge in
+                the field of AI. In addition to this, I also enjoy running and playing
+                the guitar. I believe I can efficiently complete research-related tasks,
+                and I hope to make meaningful contributions in the fields that interest me.
+            </p>
+        </section>
+
+        <!-- Research Interests -->
+        <section class="section">
+            <h2><span class="section-icon">🔬</span> Research Interests</h2>
+            <ul class="interest-tags">
+                <li>🤖 Artificial Intelligence</li>
+                <li>🌐 Virtual Worlds &amp; Metaverse</li>
+                <li>👤 Digital Humans &amp; AI Agents</li>
+                <li>🤝 Human-AI Interaction</li>
+                <li>🧠 Machine Learning</li>
+                <li>🦾 Embodied AI</li>
+            </ul>
+        </section>
+
+        <!-- Education -->
+        <section class="section">
+            <h2><span class="section-icon">🎓</span> Education</h2>
+
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span>
+                        <span class="timeline-title">Undergraduate Student</span>
+                        <span class="timeline-school"> — Tsinghua University</span>
+                    </span>
+                    <span class="timeline-date">Sep 2025 – Present</span>
+                </div>
+                <p style="margin-bottom:4px;color:var(--text-light);font-size:0.9rem;">
+                    Beijing, China · Department of Automation
+                </p>
+                <ul>
+                    <li>Top 20% in grades</li>
+                    <li>Science and technology committee member for two semesters</li>
+                    <li>Member of the Automation Department and Sports Department team</li>
+                    <li>Member of Tsinghua University Tong Class (technical committee)</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span>
+                        <span class="timeline-title">Middle &amp; High School</span>
+                        <span class="timeline-school"> — RDFZ</span>
+                    </span>
+                    <span class="timeline-date">Sep 2019 – Jun 2025</span>
+                </div>
+                <p style="margin-bottom:4px;color:var(--text-light);font-size:0.9rem;">
+                    Beijing, China
+                </p>
+                <ul>
+                    <li>Consistently ranked in the top 50</li>
+                    <li>Class representative for Mathematics and Geography</li>
+                    <li>Actively participated in class affairs</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span>
+                        <span class="timeline-title">Primary School</span>
+                        <span class="timeline-school"> — Wuyi Primary School</span>
+                    </span>
+                    <span class="timeline-date">Sep 2013 – Jun 2019</span>
+                </div>
+                <p style="margin-bottom:4px;color:var(--text-light);font-size:0.9rem;">
+                    Beijing, China
+                </p>
+                <ul>
+                    <li>Received "Outstanding Student" award three times</li>
+                    <li>Learned primary school Mathematics Olympiad and won several awards</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Honors & Awards -->
+        <section class="section">
+            <h2><span class="section-icon">🏆</span> Honors &amp; Awards</h2>
+
+            <h3>University</h3>
+            <ul class="honor-list">
+                <li>
+                    <span class="honor-name">Three-good Student</span>
+                    <span class="honor-year">2026</span>
+                    <div class="honor-event">Beijing, China</div>
+                </li>
+                <li>
+                    <span class="honor-name">Gold Award</span>
+                    <span class="honor-year">2025</span>
+                    <div class="honor-event">Evaluation of the Social Practice Team</div>
+                </li>
+                <li>
+                    <span class="honor-name">Special Award — THU-AI 9</span>
+                    <span class="honor-year">2026</span>
+                    <div class="honor-event">Beijing, China</div>
+                </li>
+            </ul>
+
+            <h3>Primary School</h3>
+            <ul class="honor-list">
+                <li>
+                    <span class="honor-name">2nd Prize — Hua Luogeng Cup</span>
+                    <span class="honor-year">2018</span>
+                    <div class="honor-event">Xiamen, China</div>
+                </li>
+                <li>
+                    <span class="honor-name">1st Prize — AMC</span>
+                    <span class="honor-year">2017</span>
+                    <div class="honor-event">America Mathematics Competition</div>
+                </li>
+                <li>
+                    <span class="honor-name">1st &amp; 2nd Prize — Yingchun Cup</span>
+                    <span class="honor-year">Several Years</span>
+                    <div class="honor-event">Beijing, China</div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Skills -->
+        <section class="section">
+            <h2><span class="section-icon">🛠</span> Personal Skills</h2>
+            <ul class="skill-list">
+                <li>🎬 Amateur film cutting (Best Editing Award, RDFZ Film Festival)</li>
+                <li>💻 Vibe coding with Codex &amp; Claude Code</li>
+                <li>📝 C / C++ programming</li>
+                <li>🏃 Running</li>
+                <li>🎸 Guitar</li>
+            </ul>
+        </section>
+
+        <!-- Projects -->
+        <section class="section">
+            <h2><span class="section-icon">🚀</span> Projects</h2>
+            <p>
+                <strong>Kaggle Competitions</strong> — participating in data science
+                and machine learning competitions to sharpen practical AI skills.
+            </p>
+            <p style="color:var(--text-light);font-size:0.9rem;">
+                <em>More projects coming soon…</em>
+            </p>
+        </section>
+
+    </main>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer class="footer">
+        <p>
+            © 2026 <strong>Yitong Liu</strong> ·
+            <a href="https://github.com/apostle715" target="_blank" rel="noopener">GitHub</a> ·
+            <a href="mailto:liuyitong0905@163.com">Email</a>
+        </p>
+    </footer>
 
 </body>
 </html>
